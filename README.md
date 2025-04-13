@@ -1,98 +1,174 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Task Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
+This is the accompanying code for the Blog article [Building a Task Management API with NestJS, Prisma, and Docker](blog.abdulqudus.com).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A scalable and robust task management REST API built with NestJS, Prisma, Docker, and Swagger. This application allows users to create, manage, and organize tasks with features like priority levels, due dates, and status tracking.
 
-## Description
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- 🔐 **JWT Authentication** - Secure user registration and login
+- 📝 **Task Management** - Full CRUD operations for tasks
+- 🏷️ **Task Organization** - Categorization, labels, priorities, and statuses
+- 📚 **API Documentation** - Interactive Swagger documentation
+- 🐳 **Containerization** - Docker support for easy deployment
+- 🔄 **Database Migrations** - Prisma migrations for version control of the database schema
+- ✅ **Data Validation** - Request validation using class-validator
+- 📊 **TypeScript Support** - Type-safe development experience
 
-```bash
-$ npm install
+## Tech Stack
+
+- **Backend Framework**: [NestJS](https://nestjs.com/)
+- **Database**: PostgreSQL
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **API Documentation**: [Swagger/OpenAPI](https://swagger.io/)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Containerization**: [Docker](https://www.docker.com/)
+- **Validation**: class-validator and class-transformer
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [npm](https://www.npmjs.com/) (v8 or later)
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) (for containerized setup)
+- [PostgreSQL](https://www.postgresql.org/) (if running without Docker)
+
+## Installation and Setup
+
+### Option 1: Local Development
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/jideabdqudus/task-manager-api
+   cd task-manager-api
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   Create a `.env` file in the root directory with the following variables:
+
+   ```env
+   # Database
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tasksdb?schema=public"
+
+   # JWT
+   JWT_SECRET="your-secret-key"
+   JWT_EXPIRES_IN="1d"
+
+   # Server
+   PORT=3000
+   ```
+
+4. **Set up the database**
+
+   ```bash
+   # Generate Prisma client
+   npx prisma generate
+
+   # Run migrations
+   npx prisma migrate dev
+
+   # Seed the database (optional)
+   npx prisma db seed
+   ```
+
+5. **Start the development server**
+
+   ```bash
+   npm run start:dev
+   ```
+
+## API Documentation
+
+Once the application is running, you can access the Swagger documentation at:
+
+```
+http://localhost:3000/api-docs
 ```
 
-## Compile and run the project
+This provides an interactive interface to explore and test all API endpoints.
 
-```bash
-# development
-$ npm run start
+## Project Structure
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+├── prisma/                 # Prisma schema and migrations
+├── src/
+│   ├── auth/               # Authentication module
+│   ├── tasks/              # Task management module
+│   ├── users/              # User management module
+│   ├── database/           # Database module with Prisma service
+│   ├── app.module.ts       # Main application module
+│   └── main.ts             # Application entry point
+├── test/                   # End-to-end tests
+├── Dockerfile              # Docker configuration
+├── docker-compose.yml      # Docker Compose configuration
+├── .env                    # Environment variables
+└── package.json            # Project dependencies
 ```
 
-## Run tests
+## API Endpoints
+
+Here are the main API endpoints:
+
+### Authentication
+
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login and get JWT token
+
+### Tasks
+
+- `GET /api/tasks` - Get all tasks for the authenticated user
+- `GET /api/tasks/:id` - Get a specific task
+- `POST /api/tasks` - Create a new task
+- `PATCH /api/tasks/:id` - Update a task
+- `DELETE /api/tasks/:id` - Delete a task
+
+## Example Usage
+
+### Register a New User
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Login
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"john@example.com","password":"password123"}'
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Create a Task
 
-## Resources
+```bash
+curl -X POST http://localhost:3000/api/tasks \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"title":"Complete NestJS project","description":"Finish the task management API","priority":"HIGH","dueDate":"2025-05-01T00:00:00.000Z"}'
+```
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [NestJS](https://nestjs.com/) - The framework used
+- [Prisma](https://www.prisma.io/) - ORM
+- [Swagger](https://swagger.io/) - API documentation
+- [Docker](https://www.docker.com/) - Containerization
