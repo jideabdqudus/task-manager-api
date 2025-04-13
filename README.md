@@ -44,7 +44,7 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/jideabdqudus/task-manager-api
+   git clone https://github.com/jideabdqudus/task-manager-api.git
    cd task-manager-api
    ```
 
